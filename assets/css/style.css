@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#gameCanvas{
+    border: 2px solid black;
+    display: flex;
+    margin: 20px auto;
+}
+
+.container{
+    margin: 20px;
+    text-align: center;
+}
