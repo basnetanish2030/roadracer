@@ -29,17 +29,59 @@ function drawScreen(){
         ctx.drawImage(fighterCar, carX, carY, carWidth, carHeight);
     }
 
-    /*------Lane Divider-----*/
-    
+  
+
 
     /*------Road Lanes------*/
     ctx.fillStyle = "#2f2b5c";
     ctx.fillRect(25,0,345,550); 
 
+    /*------Lane Dividers-----*/
+    ctx.setLineDash([20, 20]); // Set the dash pattern
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(140, 0);
+    ctx.lineTo(140, 550);
+    ctx.strokeStyle = "#ffffff";
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(255, 0);
+    ctx.lineTo(255, 550);
+    ctx.stroke();
+
     document.addEventListener("keypress", startGame);
 
 }
 
+
+enemyCars = [];
+
+// Function to create enemy cars
+function createEnemyCar() {
+    const x = Math.random() * (canvas.width - 50);
+    const enemyCar = {
+      x: x,
+      y: 0,
+      width: 50,
+      height: 80,
+      color: "red",
+      speed: 3,
+    };
+    enemyCars.push(enemyCar);
+}
+
+function enemyMove(){
+    enemyCars.forEach((enemyCar) => {
+        ctx.fillStyle = enemyCar.color;
+        ctx.fillRect(enemyCar.x, enemyCar.y, enemyCar.width, enemyCar.height);
+    
+        // Move the enemy cars
+        enemyCar.y += enemyCar.speed;
+    
+    });
+}
+  
 
 // Updating car position according to movement
 function moveCar() {
@@ -104,19 +146,25 @@ function handleKeyUp(event) {
 function startGame(event){
     if(event.code == "Space"){
         console.log("Game Started!");
+        setInterval(createEnemyCar, 1000);
         document.addEventListener("keydown", handleKeyDown);
         document.addEventListener("keyup", handleKeyUp);
+        
         setInterval(updateCanvas, 10);
+        
+        //requestAnimationFrame(updateCanvas);
     }
-  
-    
 }
 
 //Function to Update Canvas
 function updateCanvas(){
     ctx.clearRect(0,0,canvas.width, canvas.carHeight);
+    enemyMove();
     moveCar();
     drawScreen();
+
+    //requestAnimationFrame(updateCanvas);
+    
 }
 
 //Draws screen at initial stage
