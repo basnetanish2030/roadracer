@@ -42,9 +42,7 @@ export function handleKeyDown(event) {
         
         case 'ArrowDown':
             isMovingDown = true;
-            break;
-        
-        
+            break;  
     }
 }
   

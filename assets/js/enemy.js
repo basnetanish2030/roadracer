@@ -1,10 +1,12 @@
-import { canvas, ctx, carHeight, carWidth } from "./index.js";
+import { canvas, ctx, carHeight, carWidth, carSound, startGame } from "./index.js";
 import {carX, carY} from './fighter.js';
+
+const crashSound = new Audio("./assets/sound/crash.mp3");
 
 // Enemy cars
 const enemyCars = [];
-const enemyCarWidth = 60;
-const enemyCarHeight = 100;
+const enemyCarWidth = 50;
+const enemyCarHeight = 80;
 const enemyCarSpeed = 3;
 export var score = 0;
 
@@ -35,12 +37,17 @@ export function moveEnemy(){
             carX + carWidth > enemyCar.x &&
             carY < enemyCar.y + enemyCar.height &&
             carY + carHeight > enemyCar.y
-        ) {
-            alert("Game Over");
+        ){
+            
+            crashSound.currentTime = 0;
+            crashSound.play();
+            carSound.pause();
+
             // Reset the game
-            carX = canvas.width / 2;
-            carY = canvas.height - 80;
-            enemyCars.length = 0;
+            carX = 170;
+            carY = 450;
+            enemyCars = [];
+            
         }
 
         // Check if enemy car has passed the fighter car
