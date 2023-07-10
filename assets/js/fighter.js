@@ -1,4 +1,4 @@
-import { carHeight, carWidth, canvas } from "./index.js";
+import { carHeight, carWidth, canvas, allowPause } from "./index.js";
 
 export let carX=170;
 export let carY=450;
@@ -6,6 +6,7 @@ let isMovingLeft = false;
 let isMovingRight = false;
 let isMovingUp = false;
 let isMovingDown = false;
+const shootSound = new Audio('./assets/sound/gunshot.mp3');
 
 // Updating car position according to movement
 export function moveCar() {
@@ -20,9 +21,7 @@ export function moveCar() {
     }
     else if (isMovingDown && carY + carHeight < canvas.height) {
         carY += 5;
-    }
-
-    
+    } 
 }
 
 // Handling keydown event of car movement
@@ -42,7 +41,7 @@ export function handleKeyDown(event) {
         
         case 'ArrowDown':
             isMovingDown = true;
-            break;  
+            break;
     }
 }
   

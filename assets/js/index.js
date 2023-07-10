@@ -53,21 +53,16 @@ function drawScreen(){
     ctx.fillText("Score: " + score, 10, 30);
 
     document.addEventListener("keypress", playPause);
-
 }
 
-let allowPause = false;
+export let allowPause = false;
 
 //Play and Pause Control
 function playPause(event){
-    if(event.code == "Space" && allowPause == false){
+    if(event.code == "Space"){
         console.log("Game Started!");
-        allowPause = true;
+        allowPause = fasle;
         startGame();
-    }
-    else if(event.code == "Space" && allowPause==true){
-        allowPause = false;
-        drawScreen();
     }
 }
 
@@ -78,8 +73,7 @@ export function startGame(){
     carSound.play();
 
     document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-    setInterval(createEnemy, 1000);
+    document.addEventListener("keyup", handleKeyUp);    setInterval(createEnemy, 1000);
     updateCanvas();
 }
 
@@ -91,6 +85,7 @@ function updateCanvas(){
     const fighterCar = new Image();
     fighterCar.src = './assets/img/vehicles/Ford_GT40.png';
     ctx.drawImage(fighterCar, carX, carY, carWidth, carHeight);
+
     moveCar();
     moveEnemy();
     requestAnimationFrame(updateCanvas);

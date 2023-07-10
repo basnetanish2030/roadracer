@@ -2,7 +2,6 @@ import { canvas, ctx, carHeight, carWidth, carSound, startGame } from "./index.j
 import {carX, carY} from './fighter.js';
 
 const crashSound = new Audio("./assets/sound/crash.mp3");
-
 // Enemy cars
 const enemyCars = [];
 const enemyCarWidth = 50;
