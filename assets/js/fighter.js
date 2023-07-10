@@ -41,8 +41,8 @@ export function handleKeyDown(event) {
         
         case 'ArrowDown':
             isMovingDown = true;
-            break;  
-        
+            break;
+    
         case ' ':
             fireProjectile();
             break;
@@ -90,6 +90,7 @@ export function fireProjectile() {
       projectile.x = carX + carWidth / 2 - projectile.width / 2;
       projectile.y = carY - projectile.height;
       projectile.isFired = true;
+
       shootSound.currentTime = 0;
       shootSound.play();
     }

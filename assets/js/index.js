@@ -1,6 +1,6 @@
 //Importing Fighter Car Controls
 import {moveCar, handleKeyDown, handleKeyUp} from './fighter.js';
-import {carX, carY, projectile, fireProjectile} from './fighter.js';
+import {carX, carY, projectile} from './fighter.js';
 //Importing Enemy Car Functions
 import {createEnemy, moveEnemy, score, life} from './enemy.js';
 
@@ -13,16 +13,14 @@ export const carHeight = 80;
 export const carSound = new Audio('./assets/sound/carsound.mp3')
 export var highestScore = localStorage.getItem("highestScore") || 0;
 
-
 const roadImg = new Image();
 roadImg.src = './assets/img/road.png';
 let roadOffsetY = 0;
-const roadSpeed = 3;
+let roadSpeed = 5;
 
 document.addEventListener("keypress", playPause);
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);  
-
 
 function drawScreen(){
     //Left Yard
@@ -125,11 +123,11 @@ function updateCanvas(){
 }
 
 export function gameOver(){
-    clearInterval();
     if (score > highestScore) {
         highestScore = score;
         localStorage.setItem("highestScore", highestScore);
     }
+
     ctx.fillStyle = "white";
     ctx.font = "36px Arial";
     ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
@@ -138,8 +136,8 @@ export function gameOver(){
     // Reset the score
     score = 0;
     // Reset the game
-    fighterCar.x = canvas.width / 2;
-    fighterCar.y = canvas.height - 50;
+    carX = canvas.width / 2;
+    carY = canvas.height - 80;
     enemyCars.length = 0;
     projectile.isFired = false;
 }

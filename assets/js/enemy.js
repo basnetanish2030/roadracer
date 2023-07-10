@@ -8,7 +8,7 @@ export var life = 3;
 const enemyCars = [];
 const enemyCarWidth = 50;
 const enemyCarHeight = 80;
-const enemyCarSpeed = 3;
+const enemyCarSpeed = 5;
 
 export function createEnemy(){
     const x = Math.random() * (canvas.width - 50 - enemyCarWidth);
