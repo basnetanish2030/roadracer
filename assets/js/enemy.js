@@ -3,12 +3,13 @@ import {carX, carY} from './fighter.js';
 
 // Enemy cars
 const enemyCars = [];
-const enemyCarWidth = 50;
-const enemyCarHeight = 80;
+const enemyCarWidth = 60;
+const enemyCarHeight = 100;
 const enemyCarSpeed = 3;
+export var score = 0;
 
 export function createEnemy(){
-    const x = Math.random() * (canvas.width - enemyCarWidth);
+    const x = Math.random() * (canvas.width - 50 - enemyCarWidth);
     const enemyCar = {
         x: x,
         y: 0,
@@ -35,14 +36,17 @@ export function moveEnemy(){
             carY < enemyCar.y + enemyCar.height &&
             carY + carHeight > enemyCar.y
         ) {
-            // Collision detected
             alert("Game Over");
             // Reset the game
             carX = canvas.width / 2;
-            carY = canvas.height - 50;
+            carY = canvas.height - 80;
             enemyCars.length = 0;
         }
-    });
 
-    
+        // Check if enemy car has passed the fighter car
+        if (enemyCar.y > canvas.height) {
+            score++;
+            enemyCars.splice(enemyCars.indexOf(enemyCar), 1);
+        }
+    });
 }

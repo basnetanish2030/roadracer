@@ -21,6 +21,8 @@ export function moveCar() {
     else if (isMovingDown && carY + carHeight < canvas.height) {
         carY += 5;
     }
+
+    
 }
 
 // Handling keydown event of car movement
@@ -41,6 +43,7 @@ export function handleKeyDown(event) {
         case 'ArrowDown':
             isMovingDown = true;
             break;
+        
         
     }
 }

@@ -3,16 +3,14 @@ import {moveCar, handleKeyDown, handleKeyUp} from './fighter.js';
 import {carX, carY} from './fighter.js';
 
 //Importing Enemy Car Functions
-import {createEnemy, moveEnemy} from './enemy.js';
+import {createEnemy, moveEnemy, score} from './enemy.js';
 
 export const canvas = document.getElementById("gameCanvas");
 export const ctx = canvas.getContext("2d");
 
 //Initializing all required global properties and values
-export const carWidth = 50;
-export const carHeight = 80;
-
-
+export const carWidth = 60;
+export const carHeight = 100;
  
 function drawScreen(){
     //Left Yard
@@ -41,6 +39,11 @@ function drawScreen(){
     ctx.lineTo(255, 550);
     ctx.stroke();
 
+    // Draw the score
+    ctx.fillStyle = "black";
+    ctx.font = "24px Arial";
+    ctx.fillText("Score: " + score, 10, 30);
+
     document.addEventListener("keypress", playPause);
 
 }
@@ -49,11 +52,9 @@ function drawScreen(){
 function playPause(event){
     let allowPause = false;
     if(event.code == "Space" && allowPause == false){
-        
         console.log("Game Started!");
         allowPause = true;
         startGame();
-        //requestAnimationFrame(updateCanvas);
     }
     else if(event.code == "Space" && allowPause==true){
         drawScreen();
@@ -70,21 +71,14 @@ function startGame(event){
 
 //Function to Update Canvas
 function updateCanvas(){
-    
-    
     ctx.clearRect(0,0,canvas.width, canvas.carHeight);
-    
     drawScreen();
-
     //Draw Fighter Car
     const fighterCar = new Image();
     fighterCar.src = './assets/img/vehicles/Ford_GT40.png';
     ctx.drawImage(fighterCar, carX, carY, carWidth, carHeight);
-    
     moveCar();
     moveEnemy();
-
-    
     requestAnimationFrame(updateCanvas);
 }
 
