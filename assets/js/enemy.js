@@ -2,13 +2,15 @@ import { canvas, ctx, carHeight, carWidth, carSound } from "./index.js";
 import {carX, carY} from './fighter.js';
 
 const crashSound = new Audio("./assets/sound/crash.mp3");
+export var score = 0;
+export var highestScore = localStorage.getItem("highestScore") || 0;
 
 // Enemy cars
 const enemyCars = [];
-const enemyCarWidth = 60;
-const enemyCarHeight = 100;
+const enemyCarWidth = 50;
+const enemyCarHeight = 80;
 const enemyCarSpeed = 3;
-export var score = 0;
+
 
 export function createEnemy(){
     const x = Math.random() * (canvas.width - 50 - enemyCarWidth);
@@ -41,8 +43,13 @@ export function moveEnemy(){
 
             crashSound.currentTime = 0;
             crashSound.play();
-            
+
             carSound.pause();
+
+            if (score > highestScore) {
+                highestScore = score;
+                localStorage.setItem("highestScore", highestScore);
+            }
 
             alert("Game Over");
             // Reset the game
