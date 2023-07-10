@@ -1,12 +1,14 @@
-import { canvas, ctx, carHeight, carWidth } from "./index.js";
-import {carX, carY} from './fighter.js';
+import { canvas, ctx, carHeight, carWidth, carSound, gameOver} from "./index.js";
+import {carX, carY, projectile} from './fighter.js';
 
-// Enemy cars
-const enemyCars = [];
-const enemyCarWidth = 60;
-const enemyCarHeight = 100;
-const enemyCarSpeed = 3;
+const crashSound = new Audio("./assets/sound/crash.mp3");
 export var score = 0;
+export var life = 3;
+
+const enemyCars = [];
+const enemyCarWidth = 50;
+const enemyCarHeight = 80;
+const enemyCarSpeed = 5;
 
 export function createEnemy(){
     const x = Math.random() * (canvas.width - 50 - enemyCarWidth);
@@ -25,28 +27,47 @@ export function moveEnemy(){
     enemyCars.forEach((enemyCar) => {
         enemyCar.img.src = './assets/img/vehicles/BMW.png';
         ctx.drawImage(enemyCar.img, enemyCar.x, enemyCar.y, enemyCar.width, enemyCar.height);
-
-        // Move the enemy cars
         enemyCar.y += enemyCar.speed;
-
-        // Check for collision with fighter car
         if (
             carX < enemyCar.x + enemyCar.width &&
             carX + carWidth > enemyCar.x &&
             carY < enemyCar.y + enemyCar.height &&
             carY + carHeight > enemyCar.y
         ) {
-            alert("Game Over");
-            // Reset the game
-            carX = canvas.width / 2;
-            carY = canvas.height - 80;
-            enemyCars.length = 0;
+            collided(enemyCar);
         }
 
+        // Check for collision with projectile
+        if (
+            projectile.isFired &&
+            projectile.x < enemyCar.x + enemyCar.width &&
+            projectile.x + projectile.width > enemyCar.x &&
+            projectile.y < enemyCar.y + enemyCar.height &&
+            projectile.y + projectile.height > enemyCar.y
+        ) {
+            score++;
+            enemyCars.splice(enemyCars.indexOf(enemyCar), 1);
+            projectile.isFired = false;
+            crashSound.currentTime = 0;
+            crashSound.play();
+        }
         // Check if enemy car has passed the fighter car
         if (enemyCar.y > canvas.height) {
             score++;
             enemyCars.splice(enemyCars.indexOf(enemyCar), 1);
         }
     });
+}
+
+function collided(enemyCar){
+    if(life>1){
+        life--;
+        enemyCars.splice(enemyCars.indexOf(enemyCar), 1);
+    }
+    else{
+        crashSound.currentTime = 0;
+        crashSound.play();
+        carSound.pause();
+        gameOver();
+    }
 }
