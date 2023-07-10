@@ -1,4 +1,5 @@
-import { canvas, ctx } from "./index.js";
+import { canvas, ctx, carHeight, carWidth } from "./index.js";
+import {carX, carY} from './fighter.js';
 
 // Enemy cars
 const enemyCars = [];
@@ -26,5 +27,22 @@ export function moveEnemy(){
 
         // Move the enemy cars
         enemyCar.y += enemyCar.speed;
+
+        // Check for collision with fighter car
+        if (
+            carX < enemyCar.x + enemyCar.width &&
+            carX + carWidth > enemyCar.x &&
+            carY < enemyCar.y + enemyCar.height &&
+            carY + carHeight > enemyCar.y
+        ) {
+            // Collision detected
+            alert("Game Over");
+            // Reset the game
+            carX = canvas.width / 2;
+            carY = canvas.height - 50;
+            enemyCars.length = 0;
+        }
     });
+
+    
 }
