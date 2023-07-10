@@ -1,4 +1,4 @@
-import { carHeight, carWidth, canvas, allowPause } from "./index.js";
+import { carHeight, carWidth, canvas } from "./index.js";
 
 export let carX=170;
 export let carY=450;
@@ -41,7 +41,7 @@ export function handleKeyDown(event) {
         
         case 'ArrowDown':
             isMovingDown = true;
-            break;
+            break;  
     }
 }
   

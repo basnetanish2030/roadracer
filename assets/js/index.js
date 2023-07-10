@@ -8,19 +8,13 @@ import {createEnemy, moveEnemy, score} from './enemy.js';
 export const canvas = document.getElementById("gameCanvas");
 export const ctx = canvas.getContext("2d");
 
-//Loading audio
-export const carSound = new Audio("./assets/sound/movingcar.mp3");
-
 //Initializing all required global properties and values
-export const carWidth = 50;
-export const carHeight = 80;
- 
+export const carWidth = 60;
+export const carHeight = 100;
+
+export const carSound = new Audio('./assets/sound/carsound.mp3')
+
 function drawScreen(){
-
-    // const road = new Image();
-    // road.src = './assets/img/road.png';
-    // ctx.drawImage(road, 0,0,395,550);
-
     //Left Yard
     ctx.fillStyle = "#6d8c32";
     ctx.fillRect(0,0,25,550);
@@ -55,23 +49,26 @@ function drawScreen(){
     document.addEventListener("keypress", playPause);
 }
 
-export let allowPause = false;
+let allowPause = false;
 
 //Play and Pause Control
 function playPause(event){
-    if(event.code == "Space"){
+    if(event.code == "Space" && allowPause == false){
         console.log("Game Started!");
-        allowPause = fasle;
+        allowPause = false;
         startGame();
+    }
+    else if(event.code == "Space" && allowPause==true){
+        allowPause = false;
+        drawScreen();
     }
 }
 
 //Function for Game Startup setups
-export function startGame(){
-    // Play collision sound
+function startGame(event){
     carSound.currentTime = 0;
     carSound.play();
-
+    
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);    setInterval(createEnemy, 1000);
     updateCanvas();
