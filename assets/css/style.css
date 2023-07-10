@@ -10,6 +10,12 @@
 }
 
 .container{
-    margin: 20px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instructions{
+    margin: 50px;
+    font-size: 20px;
 }

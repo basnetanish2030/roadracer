@@ -42,6 +42,10 @@ export function handleKeyDown(event) {
         case 'ArrowDown':
             isMovingDown = true;
             break;  
+        
+        case ' ':
+            fireProjectile();
+            break;
     }
 }
   
@@ -63,5 +67,31 @@ export function handleKeyUp(event) {
         case 'ArrowDown':
             isMovingDown = false;
             break;
+        
+        case ' ':
+            projectile.isFired = false;
+            break;
     }
+}
+
+export const projectile = {
+    x: 0,
+    y: 0,
+    width: 10,
+    height: 20,
+    color: "yellow",
+    speed: 10,
+    isFired: false,
+};
+  
+// Function to handle firing projectiles
+export function fireProjectile() {
+    if (!projectile.isFired) {
+      projectile.x = carX + carWidth / 2 - projectile.width / 2;
+      projectile.y = carY - projectile.height;
+      projectile.isFired = true;
+      shootSound.currentTime = 0;
+      shootSound.play();
+    }
+  
 }
